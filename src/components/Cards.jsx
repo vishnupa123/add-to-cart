@@ -1,23 +1,28 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../assets/store/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 const Cards = ({ product }) => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();   // ✅ correct
 
-  // redux store  cart items 
+  // redux store cart items
   const cartItems = useSelector((state) => state.cart.items);
 
-  // give this else the isclicked  state will be again false
   const isInCart = cartItems.find(item => item.id === product.id);
 
-  const addtocart = () => {
+  const addtocart = (e) => {
+    e.stopPropagation(); // ✅ prevents card click navigation
     dispatch(add(product));
   };
 
   return (
-    <div className="w-[300px] bg-white rounded-xl shadow-xl overflow-hidden hover:shadow-2xl transition">
+    <div
+      className="w-[300px] bg-white rounded-xl shadow-xl overflow-hidden hover:shadow-2xl transition cursor-pointer"
+      onClick={() => navigate(`/product/${product.id}`)} // ✅ correct navigation
+    >
 
       {/* Image Section */}
       <div className="bg-yellow-100 p-8 flex justify-center">
@@ -56,7 +61,7 @@ const Cards = ({ product }) => {
             className={`text-xs border-2 cursor-pointer px-4 py-2 rounded transition 
             ${isInCart ? "bg-rose-400 text-white border-rose-400" : "bg-white text-black border-rose-400"}`}
           >
-            {isInCart ? "Remove from Cart" : "Add to Cart"}
+            {isInCart ? "Added" : "Add to Cart"}
           </button>
 
         </div>

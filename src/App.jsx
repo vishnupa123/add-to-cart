@@ -5,6 +5,7 @@ import Products from "./components/Products";
 import Cart from "./components/Cart";
 
 import Footer from "./components/Footer";
+import ProductDetails from "./components/ProductDetails";
 
 const App = () => {
   return (
@@ -14,7 +15,10 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Products />} />
+         <Route path="/product/:id" element={<ProductDetails />} />
+
         <Route path="/cart" element={<Cart />} />
+
       </Routes>
 
 <Footer/>
